@@ -83,21 +83,34 @@ def get_store(name):
 
 @app.route('/stores/<string:name>/items', methods=['POST'])
 def create_item_in_store(name):
-    body = request.get_json()
-    name = body.get('name', None)
-    price = int(request.get('price', None))
+    data = request.get_json()
 
-    stores[name].items.append({'name': name, 'price': price})
+    store = find_store(name)
+
+    store['items'].append(data)
+
+    store_updated = find_store(name)
 
     return jsonify({
         'success': True,
-        'store': stores[name]
+        'store': store_updated
     })
 
 
 @app.route('/stores/<string:name>/items', methods=['GET'])
 def get_items_in_store(name):
-    pass
+
+    store = find_store(name)
+    print(store)
+
+    if store is None:
+        abort(404)
+    else:
+        return jsonify({
+            'success': True,
+            'name': store['name'],
+            'items': store['items']
+        })
 
 
 @app.route('/ping')
