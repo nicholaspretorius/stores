@@ -87,7 +87,16 @@ def create_item_in_store(name):
 
     store = find_store(name)
 
-    store['items'].append(data)
+    name = data.get('name', None)
+    price = data.get('price', None)
+
+    if name is None or price is None:
+        abort(400)
+
+    store['items'].append({
+        'name': data['name'],
+        'price': data['price']
+    })
 
     store_updated = find_store(name)
 
@@ -116,6 +125,15 @@ def get_items_in_store(name):
 @app.route('/ping')
 def ping():
     return jsonify({'ping': 'pong'})
+
+
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({
+        'success': False,
+        'error': 400,
+        'message': 'bad request'
+    }), 400
 
 
 @app.errorhandler(404)
