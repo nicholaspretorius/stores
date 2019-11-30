@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, render_template
 
 app = Flask(__name__)
 
@@ -21,10 +21,7 @@ stores = [
 
 @app.route('/')
 def home():
-    return jsonify({
-        'success': True,
-        'hello': 'world'
-    })
+    return render_template('index.html')
 
 
 @app.route('/stores', methods=['GET'])
