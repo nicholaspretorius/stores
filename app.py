@@ -55,11 +55,8 @@ def format_name(name):
     return name.replace(' ', '-').lower()
 
 
-@app.route('/stores/<string:name>', methods=['GET'])
-def get_store(name):
-
+def find_store(name):
     found = None
-
     for store in stores:
         store_name = format_name(store['name'])
         url_name = format_name(name)
@@ -67,7 +64,15 @@ def get_store(name):
         if store_name == url_name:
             found = store
 
-    if found is None:
+    return found
+
+
+@app.route('/stores/<string:name>', methods=['GET'])
+def get_store(name):
+
+    store = find_store(name)
+
+    if store is None:
         abort(404)
     else:
         return jsonify({
@@ -92,11 +97,7 @@ def create_item_in_store(name):
 
 @app.route('/stores/<string:name>/items', methods=['GET'])
 def get_items_in_store(name):
-
-    return jsonify({
-        'success': True,
-        'store': stores[name]
-    })
+    pass
 
 
 @app.route('/ping')
