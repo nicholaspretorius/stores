@@ -1,0 +1,215 @@
+{
+	"info": {
+		"_postman_id": "ca2e736a-b280-4a11-84e8-0cfa86e03011",
+		"name": "Stores",
+		"description": "Collection for the Stores API built as part of the Udemy REST APIs with Flask course. ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "local",
+			"item": [
+				{
+					"name": "/stores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "79e5dc72-812d-441a-a0da-de91ffbb810d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains 'stores'\", function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json.stores).to.be.an('array')",
+									"});",
+									"",
+									"pm.test(\"Store has a 'name' and 'items'\", function () {",
+									"    var json = pm.response.json()",
+									"    pm.expect(json.stores[0]).to.have.property('name')",
+									"    pm.expect(json.stores[0]).to.have.property('items')",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/stores",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"stores"
+							]
+						},
+						"description": "Get the stores"
+					},
+					"response": []
+				},
+				{
+					"name": "/stores",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Stoke City Wakepark\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/stores",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"stores"
+							]
+						},
+						"description": "Create a store"
+					},
+					"response": []
+				},
+				{
+					"name": "/stores/:name/items",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Supertricks Wakeskate\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/stores/:name/items",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"stores",
+								":name",
+								"items"
+							],
+							"variable": [
+								{
+									"key": "name",
+									"value": "Stoke City Wakepark"
+								}
+							]
+						},
+						"description": "Get a specific store"
+					},
+					"response": []
+				},
+				{
+					"name": "/stores/:name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/stores/:name",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"stores",
+								":name"
+							],
+							"variable": [
+								{
+									"key": "name",
+									"value": "Stoke City Wakepark"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/stores/:name/items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/stores/:name/items",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"stores",
+								":name",
+								"items"
+							],
+							"variable": [
+								{
+									"key": "name",
+									"value": "WAKEMAPS"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "22d9130e-85af-487a-996c-01aa5073b881",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2f727739-7bad-4ca8-92e4-3487f97d5f2d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "68d304eb-b5d5-4609-a333-9d1d8896c707",
+			"key": "localhost",
+			"value": "http://localhost:5000",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
