@@ -9,15 +9,23 @@ stores = []
 
 class Store(Resource):
     def get(self, name):
-        pass
+        for store in stores:
+            if store['name'] == name:
+                return store
 
-    def post(self, name):
-        pass
+        return {'store': None}, 404
 
 
 class StoreList(Resource):
-    def get(self, name):
-        pass
+    def get(self):
+        return {'stores': stores}
+
+    def post(self):
+        data = request.get_json()
+        store = {'name': data['name']}
+        stores.append(store)
+
+        return store, 201
 
 
 api.add_resource(Store, '/stores/<string:name>')
