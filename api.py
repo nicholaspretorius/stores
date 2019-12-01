@@ -9,11 +9,25 @@ stores = []
 
 class Store(Resource):
     def get(self, name):
-        for store in stores:
-            if store['name'] == name:
-                return store
+        store = next(filter(lambda x: x['name'] == name, stores), None)
 
-        return {'store': None}, 404
+        return {'store': store}, 200 if store else 404
+
+        # for store in stores:
+        #     if store['name'] == name:
+        #         return store
+
+        # return {'store': None}, 404
+
+    def post(self, name):
+        if next(filter(lambda x: x['name'] == name, stores), None):
+            return {'message': "A store with name '{}' already exists. ".format(name)}, 400
+        else:
+            data = request.get_json()
+            store = {'name': data['name']}
+            stores.append(store)
+
+            return store, 201
 
 
 class StoreList(Resource):
